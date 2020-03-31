@@ -483,6 +483,13 @@ void Operator::DoctorManagementSystem() {
                   } else {
                     patients = DoctorNetwork.getEntry(index)->getPriority() - increment;
                   }
+
+                  if (patients < 0) {
+                    patients = 0;
+                  } else if (patients > 25) {
+                    patients = 25;
+                  }
+
                   DoctorNetwork.remove(index);
                   tempDoctor = new Person(alias, surname, patients);
                   DoctorNetwork.add(tempDoctor);

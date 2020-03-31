@@ -213,7 +213,7 @@ void Heap<T>::clear() {
 template <typename T>
 void Heap<T>::remove(int index) {
 	if (!isEmpty()) {
-		int heapBound = getNumberOfNodes() - 1;
+		int heapBound = m_size - 1;
 
 		T temp = m_arr[heapBound];
 		m_arr[heapBound] = m_arr[index];
