@@ -118,7 +118,7 @@ public:
 * @post calls search to confirm if a BinaryNode entry == key, removes that very BinaryNode if true.
 * @post if BinaryNode is not the root node, calls removeRec.
 */
-  void remove(); //Can throw std::runtime_error
+  void remove(int index); //Can throw std::runtime_error
 
   void removeTopDown();
 

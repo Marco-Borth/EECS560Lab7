@@ -211,13 +211,13 @@ void Heap<T>::clear() {
 	m_heapSize = 0;
 }
 template <typename T>
-void Heap<T>::remove() {
+void Heap<T>::remove(int index) {
 	if (!isEmpty()) {
 		int heapBound = getNumberOfNodes() - 1;
 
 		T temp = m_arr[heapBound];
-		m_arr[heapBound] = m_arr[0];
-		m_arr[0] = temp;
+		m_arr[heapBound] = m_arr[index];
+		m_arr[index] = temp;
 
 		delete m_arr[heapBound];
 
@@ -237,7 +237,7 @@ void Heap<T>::remove() {
 		m_size--;
 		m_heapSize--;
 
-		compareFamily(0);
+		bottomUpHeapify();
 	} else
 		throw(std::runtime_error("ERROR: Heap is empty.\n"));
 }

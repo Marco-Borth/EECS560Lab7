@@ -240,11 +240,11 @@ void Operator::PatientManagementSystem() {
             } else {
               bool notADuplicate = true;
 
-              for(int i = 0; i < PatientNetwork.getSize(); i++) {
+              for (int i = 0; i < PatientNetwork.getSize(); i++) {
                 /*cout << "\n" << PatientNetwork.getEntry(i)->getFirstName()
                      << ", " << PatientNetwork.getEntry(i)->getLastName()
                      << ", " << PatientNetwork.getEntry(i)->getPriority();*/
-                if( PatientNetwork.getEntry(i)->getFirstName() == alias &&
+                if ( PatientNetwork.getEntry(i)->getFirstName() == alias &&
                     PatientNetwork.getEntry(i)->getLastName() == surname &&
                     PatientNetwork.getEntry(i)->getPriority() == condition ) {
                       notADuplicate = false;
@@ -277,7 +277,7 @@ void Operator::PatientManagementSystem() {
             cout << "\nUrgency Rating: " << tempPatient->getPriority();
 
 
-            PatientNetwork.remove();
+            PatientNetwork.remove(0);
 
             cout << "\n\nPatient has been treated.\n\n";
             //delete tempPatient;
@@ -286,8 +286,61 @@ void Operator::PatientManagementSystem() {
           }
         }
         // 3. Change Urgency - Complete!
-        else if (option == 2) {
+        else if (option == 3) {
+          try {
+            string alias, surname;
+            int condition;
 
+            cout << "Enter Patient's ID:\n";
+            cout << "\nFirst Name: ";
+            cin >> alias;
+            cout << "\nLast Name: ";
+            cin >> surname;
+
+            bool recordFound = false;
+            int index = 0;
+
+            for (int i = 0; i < PatientNetwork.getSize(); i++) {
+              if ( PatientNetwork.getEntry(i)->getFirstName() == alias &&
+                  PatientNetwork.getEntry(i)->getLastName() == surname ) {
+                    recordFound = true;
+                    index = i;
+              }
+            }
+
+            if (recordFound) {
+              cout << "\n\nCurrent Patient listed:";
+              cout << "\nFirst Name: " << PatientNetwork.getEntry(index)->getFirstName();
+              cout << "\nLast Name: " << PatientNetwork.getEntry(index)->getLastName();
+              cout << "\nUrgency Rating: " << PatientNetwork.getEntry(index)->getPriority();
+
+              cout << "\n\nEnter new Urgency Rating: ";
+              cin >> condition;
+
+              while(1) {
+                if(cin.fail()) {
+                  cin.clear();
+                  cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                  cout << "\nERROR! Invalid Input!\n\n"; //if not an int, must try again.
+                  cout << "\nEnter new Urgency Rating: ";
+                  cin >> condition;
+                } else {
+                  PatientNetwork.remove(index);
+                  tempPatient = new Person(alias, surname, condition);
+                  PatientNetwork.add(tempPatient);
+                  PatientNetwork.bottomUpHeapify();
+
+                  cout << "\n\nPatient Record has been updated.\n\n";
+
+                  break;
+                }
+              }
+            } else {
+              cout << "\n\nEntry not Found!\n\n";
+            }
+          } catch (runtime_error) {
+            cout << "\n\n> Output: ERROR! There are no more Paitents in the Hospital Queue.\n\n";
+          }
         }
         // 9. Exit - Complete!
         else if (option == 9) {
@@ -343,11 +396,11 @@ void Operator::DoctorManagementSystem() {
             } else {
               bool notADuplicate = true;
 
-              for(int i = 0; i < DoctorNetwork.getSize(); i++) {
+              for (int i = 0; i < DoctorNetwork.getSize(); i++) {
                 /*cout << "\n" << DoctorNetwork.getEntry(i)->getFirstName()
                      << ", " << DoctorNetwork.getEntry(i)->getLastName()
                      << ", " << DoctorNetwork.getEntry(i)->getPriority();*/
-                if( DoctorNetwork.getEntry(i)->getFirstName() == alias &&
+                if ( DoctorNetwork.getEntry(i)->getFirstName() == alias &&
                     DoctorNetwork.getEntry(i)->getLastName() == surname) {
                       notADuplicate = false;
                 }
@@ -371,6 +424,82 @@ void Operator::DoctorManagementSystem() {
         else if (option == 2) {
           //DoctorManagementSystem();
         }
+        // 3. Update Patients - Complete!
+        else if (option == 3) {
+          try {
+            string alias, surname;
+            int patients;
+
+            cout << "Enter Doctor's ID for their Number of Patients Assigned to be updated:\n";
+            cout << "\nFirst Name: ";
+            cin >> alias;
+            cout << "\nLast Name: ";
+            cin >> surname;
+
+            bool recordFound = false;
+            int index = 0;
+
+            for (int i = 0; i < DoctorNetwork.getSize(); i++) {
+              if ( DoctorNetwork.getEntry(i)->getFirstName() == alias &&
+                  DoctorNetwork.getEntry(i)->getLastName() == surname ) {
+                    recordFound = true;
+                    index = i;
+              }
+            }
+
+            if (recordFound) {
+              int increment, direction;
+              cout << "\n\nCurrent Patient listed:";
+              cout << "\nFirst Name: " << DoctorNetwork.getEntry(index)->getFirstName();
+              cout << "\nLast Name: " << DoctorNetwork.getEntry(index)->getLastName();
+              cout << "\nNumber of Patients Assigned: " << DoctorNetwork.getEntry(index)->getPriority();
+
+              cout << "\n\nSelect 1 to add patients or 0 to reduce patients: ";
+              cin >> direction;
+
+              while(1) {
+                if (direction != 1 && direction != 0) {
+                  cout << "\nERROR! Invalid Input!\n\n"; //if not an int, must try again.
+                  cout << "Select 1 to add patients or 0 to reduce patients: ";
+                  cin >> direction;
+                } else {
+                  break;
+                }
+              }
+
+              cout << "\n\n>Enter the updated count: ";
+              cin >> increment;
+
+              while(1) {
+                if(cin.fail()) {
+                  cin.clear();
+                  cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                  cout << "\nERROR! Invalid Input!\n\n"; //if not an int, must try again.
+                  cout << "\nEnter the updated count: ";
+                  cin >> increment;
+                } else {
+                  if (direction == 1) {
+                    patients = DoctorNetwork.getEntry(index)->getPriority() + increment;
+                  } else {
+                    patients = DoctorNetwork.getEntry(index)->getPriority() - increment;
+                  }
+                  DoctorNetwork.remove(index);
+                  tempDoctor = new Person(alias, surname, patients);
+                  DoctorNetwork.add(tempDoctor);
+                  DoctorNetwork.bottomUpHeapify();
+
+                  cout << "\n\nDoctor Record has been updated.\n\n";
+
+                  break;
+                }
+              }
+            } else {
+              cout << "\n\nEntry not Found!\n\n";
+            }
+          } catch (runtime_error) {
+            cout << "\n\n> Output: ERROR! There are no more Doctors in the Hospital.\n\n";
+          }
+        }
         // 4. Remove Doctor - Complete!
         else if (option == 4) {
           try {
@@ -383,7 +512,7 @@ void Operator::DoctorManagementSystem() {
             cout << "\nUrgency Rating: " << tempDoctor->getPriority();
 
 
-            DoctorNetwork.remove();
+            DoctorNetwork.remove(0);
 
             cout << "\n\nDoctor has been remove from the network.\n\n";
             //delete tempPatient;
