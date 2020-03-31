@@ -12,8 +12,7 @@
 #define OPERATOR_H
 
 #include "Heap.h"
-#include "Doctor.h"
-#include "Patient.h"
+#include "Person.h"
 #include <string>
 #include <stdexcept>
 #include <iostream>
@@ -29,11 +28,11 @@ private:
   string doctersFile, paitientsFile;
   string input;
 
-  Heap <Doctor*> DoctorNetwork;
-  Heap <Patient*> PatientNetwork;
+  Heap <Person*> DoctorNetwork;
+  Heap <Person*> PatientNetwork;
 
-  Doctor* tempDoctor;
-  Patient* tempPatient;
+  Person* tempDoctor;
+  Person* tempPatient;
 
   ifstream inFile;
 

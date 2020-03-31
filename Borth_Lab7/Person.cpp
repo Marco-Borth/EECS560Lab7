@@ -1,31 +1,31 @@
 /* -----------------------------------------------------------------------------
  *
- * File Name:  Patient.cpp
+ * File Name:  Person.cpp
  * Author: Marco Borth
  * Assignment:   EECS 560 Lab 7 – Min Heap and Max Heap
  * Description:  Patient Class will return the Patient information.
- * Date: 3/24/20
+ * Date: 3/31/20
  *
  ---------------------------------------------------------------------------- */
 
-#include "Patient.h"
+#include "Person.h"
 
-Patient::Patient(string first, string last, int severity) {
+Person::Person(string first, string last, int number) {
   firstName = first;
   lastName = last;
-  urgency = severity;
+  priority = number;
 }
 
-Patient::~Patient(){}
+Person::~Person(){}
 
-string Patient::getFirstName() const {
+string Person::getFirstName() const {
   return firstName;
 }
 
-string Patient::getLastName() const {
+string Person::getLastName() const {
   return lastName;
 }
 
-int Patient::getUrgency() const {
-  return urgency;
+int Person::getPriority() const {
+  return priority;
 }

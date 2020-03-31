@@ -63,6 +63,15 @@ int Heap<T>::getNumberOfNodes() const {
 }
 
 template <typename T>
+T Heap<T>::getEntry(int index) {
+	if (index >= 0 && index < m_size) {
+		return m_arr[index];
+	} else {
+		throw(std::runtime_error("ERROR: Invalid Index.\n"));
+	}
+}
+
+template <typename T>
 int Heap<T>::getHeight() const {
 	int height = 0;
 
@@ -71,6 +80,11 @@ int Heap<T>::getHeight() const {
 	}
 
 	return height;
+}
+
+template <typename T>
+int Heap<T>::getSize() {
+	return m_size;
 }
 
 template <typename T>
@@ -111,7 +125,7 @@ void Heap<T>::add(T data) {
 }
 
 template <typename T>
-void Heap<T>::bottomUpSort() {
+void Heap<T>::bottomUpHeapify() {
 	for(int i = m_size; i >= 0; i--) {
 		bool notALeaf = false;
 		for(int j = 0; j < kary; j++) {
@@ -131,13 +145,13 @@ void Heap<T>::compareFamily(int parentIndex) {
 		if (priority == "max") {
 			for(int j = 1; j < kary; j++) {
 				if(kary * parentIndex + j + 1 < m_size) {
-					if (m_arr[parentIndex] < m_arr[kary * parentIndex + j + 1]) {
+					if (m_arr[parentIndex]->getPriority() < m_arr[kary * parentIndex + j + 1]->getPriority()) {
 						childIndex = kary * parentIndex + j + 1;
 					}
 				}
 			}
 
-			if(m_arr[parentIndex] < m_arr[childIndex]) {
+			if(m_arr[parentIndex]->getPriority() < m_arr[childIndex]->getPriority()) {
 				T temp = m_arr[parentIndex];
 				m_arr[parentIndex] = m_arr[childIndex];
 				m_arr[childIndex] = temp;
@@ -146,13 +160,13 @@ void Heap<T>::compareFamily(int parentIndex) {
 		} else if (priority == "min") {
 			for(int j = 1; j < kary; j++) {
 				if(kary * parentIndex + j + 1 < m_size) {
-				  if (m_arr[parentIndex] > m_arr[kary * parentIndex + j + 1]) {
+				  if (m_arr[parentIndex]->getPriority() > m_arr[kary * parentIndex + j + 1]->getPriority()) {
 					  childIndex = kary * parentIndex + j + 1;
 				  }
 			  }
 			}
 
-		  if(m_arr[parentIndex] > m_arr[childIndex]) {
+		  if(m_arr[parentIndex]->getPriority() > m_arr[childIndex]->getPriority()) {
 			  T temp = m_arr[parentIndex];
 			  m_arr[parentIndex] = m_arr[childIndex];
 			  m_arr[childIndex] = temp;
@@ -178,7 +192,7 @@ template <typename T>
 void Heap<T>::upHeap(int index) {
 	int parent = (index - 1) / kary;
 
-	if (index && m_arr[parent]->getUrgency() < m_arr[index]->getUrgency()) {
+	if (index && m_arr[parent]->getPriority() < m_arr[index]->getPriority()) {
 		T temp = m_arr[index];
 		m_arr[index] = m_arr[parent];
 		m_arr[parent] = temp;

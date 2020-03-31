@@ -1,25 +1,25 @@
 /* -----------------------------------------------------------------------------
  *
- * File Name:  Patient.h
+ * File Name:  Person.h
  * Author: Marco Borth
  * Assignment:   EECS 560 Lab 7 – Min Heap and Max Heap
  * Description:  Patient Class is defined.
- * Date: 3/24/20
+ * Date: 3/31/20
  *
  ---------------------------------------------------------------------------- */
 
-#ifndef PATIENT_H
-#define PATIENT_H
+#ifndef PERSON_H
+#define PERSON_H
 
 #include <string>
 #include <iostream>
 using namespace std;
 
-class Patient
+class Person
 {
 private:
   string firstName, lastName;
-  int urgency;
+  int priority;
 
 public:
 
@@ -36,18 +36,18 @@ public:
 /**
 * @return the urgency of the Patient.
 */
-  int getUrgency() const;
+  int getPriority() const;
 
 /**
 * @param first, last, and symptoms are valid strings, years and rating are valid ints.
 * @post construct Patient with all of its characteristics defined.
 */
-  Patient(string first, string last, int severity);
+  Person(string first, string last, int number);
 
 /**
 * @post deletes Patient and its characteristicss.
 */
-  ~Patient();
+  ~Person();
 };
 
 #endif

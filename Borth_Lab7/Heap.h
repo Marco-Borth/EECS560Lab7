@@ -11,7 +11,7 @@
 #ifndef HEAP_H
 #define HEAP_H
 
-#include "Patient.h"
+#include "Person.h"
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -72,6 +72,10 @@ public:
 
   void setPriority(string mode);
 
+  T getEntry(int index);
+
+  int getSize();
+
 /*
 * @pre none.
 * @post isEmpty returns false if m_heapSize > 0, returns true otherwise.
@@ -104,7 +108,7 @@ public:
 */
   void add(T data);
 
-  void bottomUpSort();
+  void bottomUpHeapify();
 
   void addTopDown(T data);
 

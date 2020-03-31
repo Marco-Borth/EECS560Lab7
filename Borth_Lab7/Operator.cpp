@@ -56,7 +56,7 @@ Operator::Operator(string file1, string file2){
         }
         //cout << alias << " " << surname << " " << condition << "\n";
 
-        tempDoctor = new Doctor(alias, surname, stoi(patients));
+        tempDoctor = new Person(alias, surname, stoi(patients));
         DoctorNetwork.add(tempDoctor);
       }
     }
@@ -67,7 +67,7 @@ Operator::Operator(string file1, string file2){
 
   inFile.close();
   // Close File.
-  DoctorNetwork.bottomUpSort();
+  DoctorNetwork.bottomUpHeapify();
 
   //Open File.
   inFile.open(paitientsFile);
@@ -103,7 +103,7 @@ Operator::Operator(string file1, string file2){
         }
         //cout << alias << " " << surname << " " << condition << "\n";
 
-        tempPatient = new Patient(alias, surname, stoi(condition));
+        tempPatient = new Person(alias, surname, stoi(condition));
         PatientNetwork.add(tempPatient);
       }
     }
@@ -114,7 +114,7 @@ Operator::Operator(string file1, string file2){
 
   inFile.close();
   // Close File.
-  PatientNetwork.bottomUpSort();
+  PatientNetwork.bottomUpHeapify();
 }
 
 void Operator::MainMenu() {
@@ -212,9 +212,54 @@ void Operator::PatientManagementSystem() {
       }
       // Operation Number has been selected.
       else {
-        // 1. Patient Management - Complete!
+        // 1. New Patient - Complete!
         if (option == 1) {
-          //PatientManagementSystem();
+          string alias, surname;
+          int condition;
+
+          cout << "\nEnter New Patient's ID and their urgency rating:\n";
+          cout << "\nFirst Name: ";
+          cin >> alias;
+          cout << "\nLast Name: ";
+          cin >> surname;
+          cout << "\nUrgency Rating: ";
+          cin >> condition;
+
+          while(1) {
+            if(cin.fail()) {
+              cin.clear();
+              cin.ignore(numeric_limits<streamsize>::max(),'\n');
+              cout << "\nERROR! Invalid Input!\n\n"; //if not an int, must try again.
+              cout << "\nCheck the input for New Patient's ID and Urgency Rating:\n";
+              cout << "\nFirst Name: ";
+              cin >> alias;
+              cout << "\nLast Name: ";
+              cin >> surname;
+              cout << "\nUrgency Rating: ";
+              cin >> condition;
+            } else {
+              bool notADuplicate = true;
+
+              for(int i = 0; i < PatientNetwork.getSize(); i++) {
+                if( PatientNetwork.getEntry(i)->getFirstName() == alias &&
+                    PatientNetwork.getEntry(i)->getLastName() == surname &&
+                    PatientNetwork.getEntry(i)->getPriority() == condition ) {
+                      notADuplicate = false;
+                }
+              }
+
+              if (notADuplicate) {
+                tempPatient = new Person(alias, surname, condition);
+                PatientNetwork.add(tempPatient);
+                PatientNetwork.bottomUpHeapify();
+              } else {
+                cout << "\nERROR! Duplicate Entry Already Exists.\n\n";
+              }
+
+              break;
+            }
+          }
+
         }
         // 2. Doctor Assignment - Complete!
         else if (option == 2) {
@@ -251,9 +296,48 @@ void Operator::DoctorManagementSystem() {
       }
       // Operation Number has been selected.
       else {
-        // 1. Patient Management - Complete!
+        // 1. New Doctor - Complete!
         if (option == 1) {
-          //PatientManagementSystem();
+          string alias, surname;
+
+          cout << "\nEnter New Doctor's ID:\n";
+          cout << "\nFirst Name: ";
+          cin >> alias;
+          cout << "\nLast Name: ";
+          cin >> surname;
+
+          while(1) {
+            if(cin.fail()) {
+              cin.clear();
+              cin.ignore(numeric_limits<streamsize>::max(),'\n');
+              cout << "\nERROR! Invalid Input!\n\n"; //if not an int, must try again.
+              cout << "\nCheck the input for New Doctor's ID:\n";
+              cout << "\nFirst Name: ";
+              cin >> alias;
+              cout << "\nLast Name: ";
+              cin >> surname;
+            } else {
+              bool notADuplicate = true;
+
+              for(int i = 0; i < DoctorNetwork.getSize(); i++) {
+                if( DoctorNetwork.getEntry(i)->getFirstName() == alias &&
+                    DoctorNetwork.getEntry(i)->getLastName() == surname) {
+                      notADuplicate = false;
+                }
+              }
+
+              if (notADuplicate) {
+                tempDoctor = new Person(alias, surname, 0);
+                DoctorNetwork.add(tempDoctor);
+                DoctorNetwork.bottomUpHeapify();
+              } else {
+                cout << "\nERROR! Duplicate Entry Already Exists.\n\n";
+              }
+
+              break;
+            }
+          }
+
         }
         // 2. Doctor Assignment - Complete!
         else if (option == 2) {
