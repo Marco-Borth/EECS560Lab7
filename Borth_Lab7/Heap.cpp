@@ -145,7 +145,7 @@ void Heap<T>::compareFamily(int parentIndex) {
 		if (priority == "max") {
 			for(int j = 1; j < kary; j++) {
 				if(kary * parentIndex + j + 1 < m_size) {
-					if (m_arr[parentIndex]->getPriority() < m_arr[kary * parentIndex + j + 1]->getPriority()) {
+					if (m_arr[childIndex]->getPriority() < m_arr[kary * parentIndex + j + 1]->getPriority()) {
 						childIndex = kary * parentIndex + j + 1;
 					}
 				}
@@ -160,7 +160,7 @@ void Heap<T>::compareFamily(int parentIndex) {
 		} else if (priority == "min") {
 			for(int j = 1; j < kary; j++) {
 				if(kary * parentIndex + j + 1 < m_size) {
-				  if (m_arr[parentIndex]->getPriority() > m_arr[kary * parentIndex + j + 1]->getPriority()) {
+				  if (m_arr[childIndex]->getPriority() > m_arr[kary * parentIndex + j + 1]->getPriority()) {
 					  childIndex = kary * parentIndex + j + 1;
 				  }
 			  }

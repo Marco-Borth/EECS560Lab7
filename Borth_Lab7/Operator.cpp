@@ -241,12 +241,16 @@ void Operator::PatientManagementSystem() {
               bool notADuplicate = true;
 
               for(int i = 0; i < PatientNetwork.getSize(); i++) {
+                /*cout << "\n" << PatientNetwork.getEntry(i)->getFirstName()
+                     << ", " << PatientNetwork.getEntry(i)->getLastName()
+                     << ", " << PatientNetwork.getEntry(i)->getPriority();*/
                 if( PatientNetwork.getEntry(i)->getFirstName() == alias &&
                     PatientNetwork.getEntry(i)->getLastName() == surname &&
                     PatientNetwork.getEntry(i)->getPriority() == condition ) {
                       notADuplicate = false;
                 }
               }
+              //cout << "\n\n";
 
               if (notADuplicate) {
                 tempPatient = new Person(alias, surname, condition);
@@ -320,11 +324,15 @@ void Operator::DoctorManagementSystem() {
               bool notADuplicate = true;
 
               for(int i = 0; i < DoctorNetwork.getSize(); i++) {
+                /*cout << "\n" << DoctorNetwork.getEntry(i)->getFirstName()
+                     << ", " << DoctorNetwork.getEntry(i)->getLastName()
+                     << ", " << DoctorNetwork.getEntry(i)->getPriority();*/
                 if( DoctorNetwork.getEntry(i)->getFirstName() == alias &&
                     DoctorNetwork.getEntry(i)->getLastName() == surname) {
                       notADuplicate = false;
                 }
               }
+              //cout << "\n\n";
 
               if (notADuplicate) {
                 tempDoctor = new Person(alias, surname, 0);
