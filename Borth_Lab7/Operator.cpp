@@ -265,9 +265,29 @@ void Operator::PatientManagementSystem() {
           }
 
         }
-        // 2. Doctor Assignment - Complete!
+        // 2. Treat Patient - Complete!
         else if (option == 2) {
-          //DoctorManagementSystem();
+          try {
+            tempPatient = PatientNetwork.getEntry(0);
+            cout << "\nTreating the most urgent Paitent...\n";
+
+            cout << "\nMost urgent Patient listed:";
+            cout << "\nFirst Name: " << tempPatient->getFirstName();
+            cout << "\nLast Name: " << tempPatient->getLastName();
+            cout << "\nUrgency Rating: " << tempPatient->getPriority();
+
+
+            PatientNetwork.remove();
+
+            cout << "\n\nPatient has been treated.\n\n";
+            //delete tempPatient;
+          } catch (runtime_error) {
+            cout << "\n\n> Output: ERROR! There are no more Paitents in the Hospital Queue.\n\n";
+          }
+        }
+        // 3. Change Urgency - Complete!
+        else if (option == 2) {
+
         }
         // 9. Exit - Complete!
         else if (option == 9) {
@@ -350,6 +370,26 @@ void Operator::DoctorManagementSystem() {
         // 2. Doctor Assignment - Complete!
         else if (option == 2) {
           //DoctorManagementSystem();
+        }
+        // 4. Remove Doctor - Complete!
+        else if (option == 4) {
+          try {
+            tempDoctor = DoctorNetwork.getEntry(0);
+            cout << "\nRemoving Doctor with the lowest Number of Assigned Patients from the network...\n";
+
+            cout << "\nDocter listed:";
+            cout << "\nFirst Name: " << tempDoctor->getFirstName();
+            cout << "\nLast Name: " << tempDoctor->getLastName();
+            cout << "\nUrgency Rating: " << tempDoctor->getPriority();
+
+
+            DoctorNetwork.remove();
+
+            cout << "\n\nDoctor has been remove from the network.\n\n";
+            //delete tempPatient;
+          } catch (runtime_error) {
+            cout << "\n\n> Output: ERROR! There are no more Doctors in the Hospital.\n\n";
+          }
         }
         // 11. Exit - Complete!
         else if (option == 11) {

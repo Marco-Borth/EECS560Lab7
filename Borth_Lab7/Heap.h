@@ -120,6 +120,8 @@ public:
 */
   void remove(); //Can throw std::runtime_error
 
+  void removeTopDown();
+
 /*
 * @pre none.
 * @post deletes all BinaryNodes within m_arr.

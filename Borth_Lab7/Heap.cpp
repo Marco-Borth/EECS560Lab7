@@ -210,17 +210,48 @@ void Heap<T>::clear() {
 
 	m_heapSize = 0;
 }
-
 template <typename T>
 void Heap<T>::remove() {
 	if (!isEmpty()) {
-		m_arr[0]->~Patient();
-
 		int heapBound = getNumberOfNodes() - 1;
 
 		T temp = m_arr[heapBound];
 		m_arr[heapBound] = m_arr[0];
 		m_arr[0] = temp;
+
+		delete m_arr[heapBound];
+
+		T* tempArr = new T [m_size];
+
+		for(int i = 0; i < m_size - 1; i++) {
+			tempArr[i] = m_arr[i];
+		}
+
+		T* swap = m_arr;
+		m_arr = tempArr;
+		tempArr = swap;
+
+		delete[] tempArr;
+		swap = nullptr;
+		delete swap;
+		m_size--;
+		m_heapSize--;
+
+		compareFamily(0);
+	} else
+		throw(std::runtime_error("ERROR: Heap is empty.\n"));
+}
+
+template <typename T>
+void Heap<T>::removeTopDown() {
+	if (!isEmpty()) {
+		int heapBound = getNumberOfNodes() - 1;
+
+		T temp = m_arr[heapBound];
+		m_arr[heapBound] = m_arr[0];
+		m_arr[0] = temp;
+
+		delete m_arr[heapBound];
 
 		m_heapSize--;
 		downHeap(0);
