@@ -28,13 +28,13 @@ Operator::Operator(string file1, string file2){
   if (!inFile.is_open()) {
     cout << "Doctors Network File name not valid!\n\n";
   } else {
-    string alias, surname, condition;
+    string alias, surname, patients;
     int InputFailures = 0;
     while (!inFile.eof()) {
       inFile >> input;
       alias = "";
       surname = "";
-      condition = "";
+      patients = "";
 
       if(inFile.fail()) {
         inFile.clear();
@@ -49,15 +49,15 @@ Operator::Operator(string file1, string file2){
             else if (j == 1)
               surname = surname + input.at(i);
             else
-              condition = condition + input.at(i);
+              patients = patients + input.at(i);
           } else {
             j++;
           }
         }
         //cout << alias << " " << surname << " " << condition << "\n";
 
-        tempPatient = new Patient(alias, surname, stoi(condition));
-        DoctorNetwork.add(tempPatient);
+        tempDoctor = new Doctor(alias, surname, stoi(patients));
+        DoctorNetwork.add(tempDoctor);
       }
     }
 
@@ -67,6 +67,7 @@ Operator::Operator(string file1, string file2){
 
   inFile.close();
   // Close File.
+  DoctorNetwork.bottomUpSort();
 
   //Open File.
   inFile.open(paitientsFile);
@@ -113,6 +114,7 @@ Operator::Operator(string file1, string file2){
 
   inFile.close();
   // Close File.
+  PatientNetwork.bottomUpSort();
 }
 
 void Operator::MainMenu() {
@@ -195,9 +197,79 @@ void Operator::run() {
 }
 
 void Operator::PatientManagementSystem() {
+  do {
+    printPatientPortal();
+    cin >> option;
 
+    while(1) {
+      // Error Handling for an non-number entry.
+      if(cin.fail()) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        cout << "\nERROR! Invalid Option!\n\n"; //if not an int, must try again.
+        printPatientPortal();
+        cin >> option;
+      }
+      // Operation Number has been selected.
+      else {
+        // 1. Patient Management - Complete!
+        if (option == 1) {
+          //PatientManagementSystem();
+        }
+        // 2. Doctor Assignment - Complete!
+        else if (option == 2) {
+          //DoctorManagementSystem();
+        }
+        // 9. Exit - Complete!
+        else if (option == 9) {
+          cout << "\nExiting Patient Management System...\n\n";
+        }
+        // Otherwise - Complete!
+        else {
+          cout << "\nERROR! Invalid Option!\n\n";
+        }
+
+        break;
+      }
+    }
+  } while (option != 9);
 }
 
 void Operator::DoctorManagementSystem() {
+  do {
+    printDoctorTerminal();
+    cin >> option;
 
+    while(1) {
+      // Error Handling for an non-number entry.
+      if(cin.fail()) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        cout << "\nERROR! Invalid Option!\n\n"; //if not an int, must try again.
+        printDoctorTerminal();
+        cin >> option;
+      }
+      // Operation Number has been selected.
+      else {
+        // 1. Patient Management - Complete!
+        if (option == 1) {
+          //PatientManagementSystem();
+        }
+        // 2. Doctor Assignment - Complete!
+        else if (option == 2) {
+          //DoctorManagementSystem();
+        }
+        // 11. Exit - Complete!
+        else if (option == 11) {
+          cout << "\nExiting Doctor Management System...\n\n";
+        }
+        // Otherwise - Complete!
+        else {
+          cout << "\nERROR! Invalid Option!\n\n";
+        }
+
+        break;
+      }
+    }
+  } while (option != 11);
 }

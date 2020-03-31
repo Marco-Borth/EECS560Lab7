@@ -47,6 +47,8 @@ private:
 */
   void resize();
 
+  void compareFamily(int parentIndex);
+
 public:
 /*
 * @pre define T object.
@@ -101,6 +103,10 @@ public:
 * @post resizes m_arr if necessary to add BinaryNode to m_arr.
 */
   void add(T data);
+
+  void bottomUpSort();
+
+  void addTopDown(T data);
 
 /*
 * @pre none.

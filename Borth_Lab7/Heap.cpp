@@ -106,6 +106,69 @@ void Heap<T>::add(T data) {
 		add(data);
 	} else {
 		m_arr[m_heapSize] = data;
+		m_heapSize++;
+	}
+}
+
+template <typename T>
+void Heap<T>::bottomUpSort() {
+	for(int i = m_size; i >= 0; i--) {
+		bool notALeaf = false;
+		for(int j = 0; j < kary; j++) {
+			if(kary * i + j + 1< m_size)
+				notALeaf = true;
+		}
+
+		if(notALeaf)
+			compareFamily(i);
+	}
+}
+
+template <typename T>
+void Heap<T>::compareFamily(int parentIndex) {
+	if (kary * parentIndex + 1 < m_size) {
+		int childIndex = kary * parentIndex + 1;
+		if (priority == "max") {
+			for(int j = 1; j < kary; j++) {
+				if(kary * parentIndex + j + 1 < m_size) {
+					if (m_arr[parentIndex] < m_arr[kary * parentIndex + j + 1]) {
+						childIndex = kary * parentIndex + j + 1;
+					}
+				}
+			}
+
+			if(m_arr[parentIndex] < m_arr[childIndex]) {
+				T temp = m_arr[parentIndex];
+				m_arr[parentIndex] = m_arr[childIndex];
+				m_arr[childIndex] = temp;
+				compareFamily(childIndex);
+			}
+		} else if (priority == "min") {
+			for(int j = 1; j < kary; j++) {
+				if(kary * parentIndex + j + 1 < m_size) {
+				  if (m_arr[parentIndex] > m_arr[kary * parentIndex + j + 1]) {
+					  childIndex = kary * parentIndex + j + 1;
+				  }
+			  }
+			}
+
+		  if(m_arr[parentIndex] > m_arr[childIndex]) {
+			  T temp = m_arr[parentIndex];
+			  m_arr[parentIndex] = m_arr[childIndex];
+			  m_arr[childIndex] = temp;
+			  compareFamily(childIndex);
+			}
+		}
+	}
+}
+
+template <typename T>
+void Heap<T>::addTopDown(T data) {
+	if (m_heapSize == m_size) {
+		resize();
+		add(data);
+	} else {
+		m_arr[m_heapSize] = data;
 		upHeap(m_heapSize);
 		m_heapSize++;
 	}
@@ -113,7 +176,7 @@ void Heap<T>::add(T data) {
 
 template <typename T>
 void Heap<T>::upHeap(int index) {
-	int parent = (index - 1) / 2;
+	int parent = (index - 1) / kary;
 
 	if (index && m_arr[parent]->getUrgency() < m_arr[index]->getUrgency()) {
 		T temp = m_arr[index];

@@ -1,53 +1,53 @@
 /* -----------------------------------------------------------------------------
  *
- * File Name:  Patient.h
+ * File Name:  Doctor.h
  * Author: Marco Borth
  * Assignment:   EECS 560 Lab 7 – Min Heap and Max Heap
- * Description:  Patient Class is defined.
- * Date: 3/24/20
+ * Description:  Doctor Class is defined.
+ * Date: 3/31/20
  *
  ---------------------------------------------------------------------------- */
 
-#ifndef PATIENT_H
-#define PATIENT_H
+#ifndef DOCTOR_H
+#define DOCTOR_H
 
 #include <string>
 #include <iostream>
 using namespace std;
 
-class Patient
+class Doctor
 {
 private:
   string firstName, lastName;
-  int urgency;
+  int patientsAssigned;
 
 public:
 
 /**
-* @return the firstName of the Patient.
+* @return the firstName of the Doctor.
 */
   string getFirstName() const;
 
 /**
-* @return the lastName of the Patient.
+* @return the lastName of the Doctor.
 */
   string getLastName() const;
 
 /**
-* @return the urgency of the Patient.
+* @return the number of patientsAssigned to the Doctor.
 */
-  int getUrgency() const;
+  int getPatientsAssigned() const;
 
 /**
 * @param first, last, and symptoms are valid strings, years and rating are valid ints.
-* @post construct Patient with all of its characteristics defined.
+* @post construct Doctor with all of its characteristics defined.
 */
-  Patient(string first, string last, int severity);
+  Doctor(string first, string last, int patients);
 
 /**
-* @post deletes Patient and its characteristicss.
+* @post deletes Doctor and its characteristicss.
 */
-  ~Patient();
+  ~Doctor();
 };
 
 #endif

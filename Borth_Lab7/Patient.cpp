@@ -2,9 +2,9 @@
  *
  * File Name:  Patient.cpp
  * Author: Marco Borth
- * Assignment:   EECS-268 Lab 10 Program
+ * Assignment:   EECS 560 Lab 7 – Min Heap and Max Heap
  * Description:  Patient Class will return the Patient information.
- * Date: 5/9/19
+ * Date: 3/24/20
  *
  ---------------------------------------------------------------------------- */
 
