@@ -75,7 +75,7 @@ template <typename T>
 int Heap<T>::getHeight() const {
 	int height = 0;
 
-	while (2 * height + 2 < m_heapSize) {
+	while (3 * height + 3 < m_size) {
 		height++;
 	}
 
