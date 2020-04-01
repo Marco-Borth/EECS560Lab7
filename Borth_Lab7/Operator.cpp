@@ -342,6 +342,39 @@ void Operator::PatientManagementSystem() {
             cout << "\n\n> Output: ERROR! There are no more Paitents in the Hospital Queue.\n\n";
           }
         }
+        // 4. Next Patient - Complete!
+        else if (option == 4) {
+          if (!PatientNetwork.isEmpty()) {
+            if (PatientNetwork.getSize() == 1) {
+              cout << "\nThere is only the current patient listed:\n\n";
+              cout << "\nFirst Name: " << PatientNetwork.getEntry(0)->getFirstName();
+              cout << "\nLast Name: " << PatientNetwork.getEntry(0)->getLastName();
+              cout << "\nUrgency Rating: " << PatientNetwork.getEntry(0)->getPriority();
+            } else  {
+              int index = 1;
+              if (PatientNetwork.getSize() == 2) {
+                index = 1;
+              } else if (PatientNetwork.getSize() == 3) {
+                if(PatientNetwork.getEntry(1)->getPriority() < PatientNetwork.getEntry(2)->getPriority()) {
+                  index = 2;
+                }
+              } else {
+                for (int j = 2; j <= 3; j++) {
+        					if (PatientNetwork.getEntry(index)->getPriority() < PatientNetwork.getEntry(j)->getPriority()) {
+        						index = j;
+        					}
+          			}
+              }
+              cout << "\nNext Patient listed:\n\n";
+              cout << "\nFirst Name: " << PatientNetwork.getEntry(index)->getFirstName();
+              cout << "\nLast Name: " << PatientNetwork.getEntry(index)->getLastName();
+              cout << "\nUrgency Rating: " << PatientNetwork.getEntry(index)->getPriority();
+            }
+            cout << "\n\n";
+          } else {
+            cout << "\n> Output: ERROR! There are no more Paitents in the Hospital Queue.\n\n";
+          }
+        }
         // 9. Exit - Complete!
         else if (option == 9) {
           cout << "\nExiting Patient Management System...\n\n";
@@ -419,10 +452,6 @@ void Operator::DoctorManagementSystem() {
             }
           }
 
-        }
-        // 2. Doctor Assignment - Complete!
-        else if (option == 2) {
-          //DoctorManagementSystem();
         }
         // 3. Update Patients - Complete!
         else if (option == 3) {
@@ -525,6 +554,39 @@ void Operator::DoctorManagementSystem() {
             //delete tempPatient;
           } catch (runtime_error) {
             cout << "\n\n> Output: ERROR! There are no more Doctors in the Hospital.\n\n";
+          }
+        }
+        // 5. Next Available Doctor - Complete!
+        else if (option == 5) {
+          if (!DoctorNetwork.isEmpty()) {
+            if (DoctorNetwork.getSize() == 1) {
+              cout << "\nThere is only the current Doctor Available:\n\n";
+              cout << "\nFirst Name: " << DoctorNetwork.getEntry(0)->getFirstName();
+              cout << "\nLast Name: " << DoctorNetwork.getEntry(0)->getLastName();
+              cout << "\nUrgency Rating: " << DoctorNetwork.getEntry(0)->getPriority();
+            } else  {
+              int index = 1;
+              if (PatientNetwork.getSize() == 2) {
+                index = 1;
+              } else if (PatientNetwork.getSize() == 3) {
+                if(DoctorNetwork.getEntry(1)->getPriority() > DoctorNetwork.getEntry(2)->getPriority()) {
+                  index = 2;
+                }
+              } else {
+                for (int j = 2; j <= 3; j++) {
+        					if (DoctorNetwork.getEntry(index)->getPriority() > DoctorNetwork.getEntry(j)->getPriority()) {
+        						index = j;
+        					}
+          			}
+              }
+              cout << "\nNext Doctor Available:\n\n";
+              cout << "\nFirst Name: " << DoctorNetwork.getEntry(index)->getFirstName();
+              cout << "\nLast Name: " << DoctorNetwork.getEntry(index)->getLastName();
+              cout << "\nUrgency Rating: " << DoctorNetwork.getEntry(index)->getPriority();
+            }
+            cout << "\n\n";
+          } else {
+            cout << "\n> Output: ERROR! There are no more Paitents in the Hospital Queue.\n\n";
           }
         }
         // 11. Exit - Complete!
