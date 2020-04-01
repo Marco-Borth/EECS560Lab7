@@ -465,15 +465,11 @@ void Operator::DoctorManagementSystem() {
               bool notADuplicate = true;
 
               for (int i = 0; i < DoctorNetwork.getSize(); i++) {
-                /*cout << "\n" << DoctorNetwork.getEntry(i)->getFirstName()
-                     << ", " << DoctorNetwork.getEntry(i)->getLastName()
-                     << ", " << DoctorNetwork.getEntry(i)->getPriority();*/
                 if ( DoctorNetwork.getEntry(i)->getFirstName() == alias &&
                     DoctorNetwork.getEntry(i)->getLastName() == surname) {
                       notADuplicate = false;
                 }
               }
-              //cout << "\n\n";
 
               if (notADuplicate) {
                 tempDoctor = new Person(alias, surname, 0);
