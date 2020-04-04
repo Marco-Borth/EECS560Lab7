@@ -127,16 +127,15 @@ void Operator::MainMenu() {
 void Operator::printDoctorTerminal() {
   cout << "---------------------------------------------Doctor Assignment System-----------------------------------------\n\n";
   cout << "1.  New Doctor\n";
-  cout << "2.  Assign Patient\n";
-  cout << "3.  Update Patients\n";
-  cout << "4.  Remove Doctor\n";
-  cout << "5.  Next Available Doctor\n";
-  cout << "6.  Check Availability\n";
-  cout << "7.  Total Doctor Count\n";
-  cout << "8.  Available Doctor Count\n";
-  cout << "9.  Available Doctors Report\n";
-  cout << "10. Busy Doctors List\n";
-  cout << "11. Go Back to Menu\n\n> ";
+  cout << "2.  Update Patients\n";
+  cout << "3.  Remove Doctor\n";
+  cout << "4.  Next Available Doctor\n";
+  cout << "5.  Check Availability\n";
+  cout << "6.  Total Doctor Count\n";
+  cout << "7.  Available Doctor Count\n";
+  cout << "8.  Available Doctors Report\n";
+  cout << "9.  Busy Doctors List\n";
+  cout << "10. Go Back to Menu\n\n> ";
 }
 
 void Operator::printPatientPortal() {
@@ -256,6 +255,7 @@ void Operator::PatientManagementSystem() {
                 cout << "\nERROR! Duplicate Entry Already Exists.\n\n";
               }
 
+              cout << "\n\n";
               break;
             }
           }
@@ -522,14 +522,15 @@ void Operator::DoctorManagementSystem() {
                 cout << "\nERROR! Duplicate Entry Already Exists.\n\n";
               }
 
+              cout << "\n\n";
               break;
             }
           }
 
         }
-        // 3. Update Patients - Complete!
-        else if (option == 3) {
-          try {
+        // 2. Update Patients - Complete!
+        else if (option == 2) {
+          if (!DoctorNetwork.isEmpty()) {
             string alias, surname;
             int patients;
 
@@ -606,12 +607,12 @@ void Operator::DoctorManagementSystem() {
             } else {
               cout << "\n\nEntry not Found!\n\n";
             }
-          } catch (runtime_error) {
+          } else {
             cout << "\n\n> Output: ERROR! There are no more Doctors in the Hospital.\n\n";
           }
         }
-        // 4. Remove Doctor - Complete!
-        else if (option == 4) {
+        // 3. Remove Doctor - Complete!
+        else if (option == 3) {
           try {
             tempDoctor = DoctorNetwork.getEntry(0);
             cout << "\nRemoving Doctor with the lowest Number of Assigned Patients from the network...\n";
@@ -619,7 +620,7 @@ void Operator::DoctorManagementSystem() {
             cout << "\nDocter listed:";
             cout << "\nFirst Name: " << tempDoctor->getFirstName();
             cout << "\nLast Name: " << tempDoctor->getLastName();
-            cout << "\nUrgency Rating: " << tempDoctor->getPriority();
+            cout << "\nNumber of Patients Assigned: " << tempDoctor->getPriority();
 
 
             DoctorNetwork.remove(0);
@@ -630,14 +631,14 @@ void Operator::DoctorManagementSystem() {
             cout << "\n\n> Output: ERROR! There are no more Doctors in the Hospital.\n\n";
           }
         }
-        // 5. Next Available Doctor - Complete!
-        else if (option == 5) {
+        // 4. Next Available Doctor - Complete!
+        else if (option == 4) {
           if (!DoctorNetwork.isEmpty()) {
             if (DoctorNetwork.getSize() == 1) {
               cout << "\nThere is only the current Doctor Available:\n\n";
               cout << "\nFirst Name: " << DoctorNetwork.getEntry(0)->getFirstName();
               cout << "\nLast Name: " << DoctorNetwork.getEntry(0)->getLastName();
-              cout << "\nUrgency Rating: " << DoctorNetwork.getEntry(0)->getPriority();
+              cout << "\nNumber of Patients Assigned: " << DoctorNetwork.getEntry(0)->getPriority();
             } else  {
               int index = 1;
               if (PatientNetwork.getSize() == 2) {
@@ -656,16 +657,16 @@ void Operator::DoctorManagementSystem() {
               cout << "\nNext Doctor Available:\n\n";
               cout << "\nFirst Name: " << DoctorNetwork.getEntry(index)->getFirstName();
               cout << "\nLast Name: " << DoctorNetwork.getEntry(index)->getLastName();
-              cout << "\nUrgency Rating: " << DoctorNetwork.getEntry(index)->getPriority();
+              cout << "\nNumber of Patients Assigned: " << DoctorNetwork.getEntry(index)->getPriority();
             }
             cout << "\n\n";
           } else {
             cout << "\n> Output: ERROR! There are no more Doctors in the Hospital.\n\n";
           }
         }
-        // 6. Check Availability - Complete!
-        else if (option == 6) {
-          try {
+        // 5. Check Availability - Complete!
+        else if (option == 5) {
+          if (!DoctorNetwork.isEmpty()) {
             string alias, surname;
 
             cout << "Enter Doctor's ID for their Number of Patients Assigned to be updated:\n";
@@ -693,30 +694,30 @@ void Operator::DoctorManagementSystem() {
             if (!recordFound) {
               cout << "\n\nRecord not Found!\n\n";
             }
-          } catch (runtime_error) {
+          } else {
             cout << "\n\n> Output: ERROR! There are no more Doctors in the Hospital.\n\n";
           }
         }
-        // 7. Total Doctor Count - Complete!
-        else if (option == 7) {
+        // 6. Total Doctor Count - Complete!
+        else if (option == 6) {
           cout << "\nTotal Doctor count is: " << DoctorNetwork.getSize() << "\n\n";
         }
-        // 8. Available Doctor Count - Complete!
-        else if (option == 8) {
+        // 7. Available Doctor Count - Complete!
+        else if (option == 7) {
           int count = 0;
           for (int i = 0; i < DoctorNetwork.getSize(); i++) {
-            if(DoctorNetwork.getEntry(i)->getPriority() < 22) {
+            if (DoctorNetwork.getEntry(i)->getPriority() < 22) {
               count++;
             }
           }
           cout << "\nAvailable Doctor count is: " << count << "\n\n";
         }
-        // 9. Available Doctors Report - Complete!
-        else if (option == 9) {
-          if(!DoctorNetwork.isEmpty()) {
+        // 8. Available Doctors Report - Complete!
+        else if (option == 8) {
+          if (!DoctorNetwork.isEmpty()) {
             cout << "\nAvailable Doctors Report: ";
             for (int i = 0; i < DoctorNetwork.getSize(); i++) {
-              if(DoctorNetwork.getEntry(i)->getPriority() < 22) {
+              if (DoctorNetwork.getEntry(i)->getPriority() < 22) {
                 cout << "\n" << DoctorNetwork.getEntry(i)->getFirstName();
                 cout << ", " << DoctorNetwork.getEntry(i)->getLastName();
                 cout << ", " << DoctorNetwork.getEntry(i)->getPriority();
@@ -727,12 +728,12 @@ void Operator::DoctorManagementSystem() {
             cout << "\n> Output: ERROR! There are no more Doctors in the Hospital.\n\n";
           }
         }
-        // 10. Busy Doctors List - Complete!
-        else if (option == 10) {
-          if(!DoctorNetwork.isEmpty()) {
+        // 9. Busy Doctors List - Complete!
+        else if (option == 9) {
+          if (!DoctorNetwork.isEmpty()) {
             cout << "\nBusy Doctors List: ";
             for (int i = 0; i < DoctorNetwork.getSize(); i++) {
-              if(DoctorNetwork.getEntry(i)->getPriority() >= 22) {
+              if (DoctorNetwork.getEntry(i)->getPriority() >= 22) {
                 cout << "\n" << DoctorNetwork.getEntry(i)->getFirstName();
                 cout << ", " << DoctorNetwork.getEntry(i)->getLastName();
                 cout << ", " << DoctorNetwork.getEntry(i)->getPriority();
@@ -743,8 +744,8 @@ void Operator::DoctorManagementSystem() {
             cout << "\n> Output: ERROR! There are no more Doctors in the Hospital.\n\n";
           }
         }
-        // 11. Exit - Complete!
-        else if (option == 11) {
+        // 10. Exit - Complete!
+        else if (option == 10) {
           cout << "\nExiting Doctor Management System...\n\n";
         }
         // Otherwise - Complete!
@@ -755,5 +756,5 @@ void Operator::DoctorManagementSystem() {
         break;
       }
     }
-  } while (option != 11);
+  } while (option != 10);
 }
