@@ -283,7 +283,7 @@ void Operator::PatientManagementSystem() {
         }
         // 3. Change Urgency - Complete!
         else if (option == 3) {
-          try {
+          if (!PatientNetwork.isEmpty()) {
             string alias, surname;
             int condition;
 
@@ -334,7 +334,7 @@ void Operator::PatientManagementSystem() {
             } else {
               cout << "\n\nEntry not Found!\n\n";
             }
-          } catch (runtime_error) {
+          } else {
             cout << "\n\n> Output: ERROR! There are no more Paitents in the Hospital Queue.\n\n";
           }
         }
@@ -394,6 +394,49 @@ void Operator::PatientManagementSystem() {
             cout << "\n\n";
           } else {
             cout << "\n> Output: ERROR! There are no more Paitents in the Hospital Queue.\n\n";
+          }
+        }
+        // 6. Patient Token - Complete!
+        else if (option == 6) {
+          if (!PatientNetwork.isEmpty()) {
+            string alias, surname;
+
+            cout << "Enter Patient's ID:\n";
+            cout << "\nFirst Name: ";
+            cin >> alias;
+            cout << "\nLast Name: ";
+            cin >> surname;
+
+            bool recordFound = false;
+            int index = 0;
+
+            for (int i = 0; i < PatientNetwork.getSize(); i++) {
+              if ( PatientNetwork.getEntry(i)->getFirstName() == alias &&
+                  PatientNetwork.getEntry(i)->getLastName() == surname ) {
+                    recordFound = true;
+                    index = i;
+              }
+            }
+
+            if (recordFound) {
+              cout << "\n\nCurrent Patient listed:";
+              cout << "\nFirst Name: " << PatientNetwork.getEntry(index)->getFirstName();
+              cout << "\nLast Name: " << PatientNetwork.getEntry(index)->getLastName();
+              cout << "\nPriority in Queue: ";
+              index++;
+              if (index % 10 == 1)
+                cout << index << "st priority\n\n";
+              else if (index % 10 == 2)
+                cout << index << "nd priority\n\n";
+              else if (index % 10 == 3)
+                cout << index << "rd priority\n\n";
+              else
+                cout << index << "th priority\n\n";
+            } else {
+              cout << "\n\nEntry not Found!\n\n";
+            }
+          } else {
+            cout << "\n\n> Output: ERROR! There are no more Paitents in the Hospital Queue.\n\n";
           }
         }
         // 7. Patient Count - Complete!
